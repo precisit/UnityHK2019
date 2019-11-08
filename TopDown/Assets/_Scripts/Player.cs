@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private Rigidbody myRigidbody;
     public Camera mainCamera;
     public LayerMask mask;
+    public GameObject bulletPrefab;
+    public Transform muzzle;
 
     private void Awake()
     {
@@ -46,6 +48,9 @@ public class Player : MonoBehaviour
 
     private void UpdateShooting()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation);
+        }
     }
 }
