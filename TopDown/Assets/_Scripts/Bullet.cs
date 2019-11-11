@@ -32,7 +32,6 @@ public class Bullet : MonoBehaviour
         if(Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.fixedDeltaTime, hitLayers))
         {
             Hit(hit.point);
-            Debug.Log("Ray hit!:");
         }
     }
 
@@ -45,7 +44,6 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("On Trigger Enter");
         Destroy(gameObject);
     }
 }
