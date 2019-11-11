@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3524755946288354114}
+  - component: {fileID: 3997565883103477452}
   - component: {fileID: 3524755946288354115}
   - component: {fileID: 3524755946288354112}
   - component: {fileID: 3524755946288354113}
   - component: {fileID: 6575468384211463785}
-  - component: {fileID: 3997565883103477452}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -30,11 +30,30 @@ Transform:
   m_GameObject: {fileID: 3524755946288354118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.48264}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3997565883103477452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524755946288354118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7abdaa59862a548eb867f67a50dda282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 40
+  maxRange: 50
+  hitEffect: {fileID: 9093237153720340463, guid: b3800c77ab74746c4a24034dcd5d56d6,
+    type: 3}
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!33 &3524755946288354115
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,22 +126,6 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 3
---- !u!114 &3997565883103477452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524755946288354118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abdaa59862a548eb867f67a50dda282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 40
-  maxRange: 50
-  hitEffect: {fileID: 9093237153720340463, guid: b3800c77ab74746c4a24034dcd5d56d6,
-    type: 3}
+  m_CollisionDetection: 2

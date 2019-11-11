@@ -151,14 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a2820eaaccc4ef5a70ba4bf79c42b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  mainCamera: {fileID: 963194227}
-  mask:
+  MoveSpeed: 10
+  MainCamera: {fileID: 963194227}
+  AimMask:
     serializedVersion: 2
     m_Bits: 256
-  bulletPrefab: {fileID: 3524755946288354118, guid: 24265109d044b4606af146df0eddd249,
+  BulletPrefab: {fileID: 3524755946288354118, guid: 24265109d044b4606af146df0eddd249,
     type: 3}
-  muzzle: {fileID: 2102874600}
+  Muzzle: {fileID: 2102874600}
 --- !u!136 &77603130
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 197825204}
   - component: {fileID: 197825203}
   - component: {fileID: 197825207}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 199996751}
   - component: {fileID: 199996750}
   - component: {fileID: 199996754}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 738348143}
   - component: {fileID: 738348142}
   - component: {fileID: 738348146}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -844,7 +844,7 @@ GameObject:
   - component: {fileID: 981379578}
   - component: {fileID: 981379577}
   - component: {fileID: 981379581}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 1357104795}
   - component: {fileID: 1357104794}
   - component: {fileID: 1357104798}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 1825720999}
   - component: {fileID: 1825720998}
   - component: {fileID: 1825721002}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

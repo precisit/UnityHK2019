@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
     public float maxRange;
     Vector3 startPos;
     public GameObject hitEffect;
+    RaycastHit hit;
+    public LayerMask hitLayers;
 
     void Start()
     {
@@ -25,16 +27,25 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void Hit()
+    void FixedUpdate()
     {
-        GameObject hit = Instantiate(hitEffect, transform.position, transform.rotation);
+        if(Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.fixedDeltaTime, hitLayers))
+        {
+            Hit(hit.point);
+            Debug.Log("Ray hit!:");
+        }
+    }
+
+    private void Hit(Vector3 point)
+    {
+        GameObject hit = Instantiate(hitEffect, point, transform.rotation);
         Destroy(hit, 2f);
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("On Trigger Enter");
-        Hit();
         Destroy(gameObject);
     }
 }

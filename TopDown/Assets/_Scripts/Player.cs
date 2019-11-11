@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed;
+    public float MoveSpeed;
     private Rigidbody myRigidbody;
-    public Camera mainCamera;
-    public LayerMask mask;
-    public GameObject bulletPrefab;
-    public Transform muzzle;
+    public Camera MainCamera;
+    public LayerMask AimMask;
+    public GameObject BulletPrefab;
+    public Transform Muzzle;
 
     private void Awake()
     {
@@ -31,15 +31,15 @@ public class Player : MonoBehaviour
                             (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f), 
                             0f, 
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
-        myRigidbody.AddForce(moveSpeed * input, ForceMode.Impulse);
+        myRigidbody.AddForce(MoveSpeed * input, ForceMode.Impulse);
     }
 
     private void UpdateRotation()
     {
         // Rotation Raycast
         RaycastHit hit;
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, float.MaxValue, mask))
+        Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, float.MaxValue, AimMask))
         {
             Vector3 direction = Utils.Flatten(hit.point) - Utils.Flatten(transform.position);
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation);
+            Instantiate(BulletPrefab, Muzzle.transform.position, Muzzle.transform.rotation);
         }
     }
 }
