@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public GameObject BulletPrefab;
     public Transform Muzzle;
 
+    private Vector3 currentInput;
+
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
@@ -24,14 +26,18 @@ public class Player : MonoBehaviour
         UpdateShooting();
     }
 
+    private void FixedUpdate()
+    {
+        myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Impulse);
+    }
+
     private void UpdateMovement()
     {
         // Movement
-        Vector3 input = new Vector3( 
+        currentInput = new Vector3( 
                             (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f), 
                             0f, 
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
-        myRigidbody.AddForce(MoveSpeed * input, ForceMode.Impulse);
     }
 
     private void UpdateRotation()

@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a2820eaaccc4ef5a70ba4bf79c42b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
+  MoveSpeed: 5
   MainCamera: {fileID: 963194227}
   AimMask:
     serializedVersion: 2
@@ -1491,7 +1491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.48414016, y: -0, z: -0, w: 0.87499046}
-  m_LocalPosition: {x: 0, y: 9.12, z: -5.44}
+  m_LocalPosition: {x: 0, y: 7.56, z: -4.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1506,12 +1506,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5fd26cf985fa4a8384fe3f5ceadeb01, type: 3}
+  m_Script: {fileID: 11500000, guid: eab991f256f4c485cbca408b5d1b3317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Follow: {fileID: 77603128}
   Offset: {x: 0, y: 10, z: -5.5}
   LookAt: 1
+  Smoothing: 0.5
+  FollowRigidbody: {fileID: 77603134}
+  VelocityOffset: 0.8
+  ZoomPerVelocity: 1
 --- !u!1 &981379576
 GameObject:
   m_ObjectHideFlags: 0
