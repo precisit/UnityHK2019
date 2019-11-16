@@ -1514,8 +1514,8 @@ MonoBehaviour:
   LookAt: 1
   Smoothing: 0.5
   FollowRigidbody: {fileID: 77603134}
-  VelocityOffset: 0.8
-  ZoomPerVelocity: 1
+  VelocityOffset: 1
+  ZoomPerVelocity: 0.5
 --- !u!1 &981379576
 GameObject:
   m_ObjectHideFlags: 0
