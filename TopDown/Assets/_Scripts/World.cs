@@ -9,6 +9,7 @@ public class World : MonoBehaviour
     public float SpawnTime;
     private float currentTime;
     public Target TargetPrefab;
+    public LayerMask ObstacleLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +28,24 @@ public class World : MonoBehaviour
     }
 
     private void doSpawnTarget() {
-        Vector3 spawnOffset = new Vector3(SpawnArea.x * Random.Range(-0.5f, 0.5f),
+        Vector3 spawnPosition = transform.position + new Vector3(SpawnArea.x * Random.Range(-0.5f, 0.5f),
         1f,
         SpawnArea.z * Random.Range(-0.5f, 0.5f));
+
+        int spawnAttempts = 0;
+        do {
+            spawnPosition = transform.position + new Vector3(SpawnArea.x * Random.Range(-0.5f, 0.5f),
+                                        1f,
+                                        SpawnArea.z * Random.Range(-0.5f, 0.5f));
+            spawnAttempts++;
+        } while(Physics.OverlapSphere(spawnPosition, 2f, ObstacleLayer).Length > 0
+            && spawnAttempts < 10);
+        if(spawnAttempts < 10) {
+            Instantiate(TargetPrefab, spawnPosition, Quaternion.identity);
+        } else {
+            Debug.Log("Failed to find suitable spawn location after 10 retries. Aborting spawn.");
+        }
         
-        Instantiate(TargetPrefab, transform.position + spawnOffset, Quaternion.identity);
     }
 
     public void OnDrawGizmos() {
