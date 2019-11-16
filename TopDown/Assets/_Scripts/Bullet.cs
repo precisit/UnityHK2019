@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody myRigidbody;
     public float maxRange;
     Vector3 startPos;
-    public GameObject hitEffect;
+    public GameObject HitEffect;
     RaycastHit hit;
     public LayerMask hitLayers;
 
@@ -31,14 +31,24 @@ public class Bullet : MonoBehaviour
     {
         if(Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.fixedDeltaTime, hitLayers))
         {
-            Hit(hit.point);
+            Hit(hit);
         }
     }
 
-    private void Hit(Vector3 point)
+    private void Hit(RaycastHit hit)
     {
-        GameObject hit = Instantiate(hitEffect, point, transform.rotation);
-        Destroy(hit, 2f);
+        Damageable damageable = hit.collider.gameObject.GetComponent<Damageable>();
+        GameObject hitEffect = null;
+        
+        if(damageable) {
+            damageable.OnDamage();
+            hitEffect = damageable.GetHitEffect();
+            hitEffect.transform.position = hit.point;
+            hitEffect.transform.rotation = transform.rotation;
+        } else {
+            hitEffect = Instantiate(HitEffect, hit.point, transform.rotation);
+        }
+        Destroy(hitEffect, 2f);
         Destroy(gameObject);
     }
 
