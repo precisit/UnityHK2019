@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3843356435179975101}
   - component: {fileID: 2355359807319721385}
   - component: {fileID: 3093822620230145442}
+  - component: {fileID: 2609791547509609215}
   m_Layer: 10
   m_Name: Target
   m_TagString: Untagged
@@ -108,3 +109,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 9093237153720340463, guid: 7139c2deab82b4b5690d631cbc2a433e,
     type: 3}
+--- !u!195 &2609791547509609215
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776931489565845705}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
