@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float MoveSpeed;
+    public float TurnSpeed = 0.1f;
     private Rigidbody myRigidbody;
     public Camera MainCamera;
     public LayerMask AimMask;
@@ -21,14 +22,13 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateMovement();
-        UpdateRotation();
-
         UpdateShooting();
     }
 
     private void FixedUpdate()
     {
         myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Impulse);
+        UpdateRotation();
     }
 
     private void UpdateMovement()
@@ -47,8 +47,8 @@ public class Player : MonoBehaviour
         Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, float.MaxValue, AimMask))
         {
-            Vector3 direction = Utils.Flatten(hit.point) - Utils.Flatten(transform.position);
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            float angle = Vector3.SignedAngle(transform.forward, hit.point.Flatten() - transform.position.Flatten(), Vector3.up);
+            myRigidbody.AddTorque(transform.up * angle * TurnSpeed, ForceMode.Force);
         }
     }
 

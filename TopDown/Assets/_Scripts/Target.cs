@@ -7,7 +7,7 @@ public class Target : Damageable
 {
 
     public GameObject HitEffect;
-    
+
     private GameObject Chase;
     private NavMeshAgent agent;
 
@@ -16,7 +16,6 @@ public class Target : Damageable
         Player p = FindObjectOfType<Player>();
         Chase = p.gameObject;
         agent = GetComponent<NavMeshAgent>();
-        
     }
 
     void Update()
