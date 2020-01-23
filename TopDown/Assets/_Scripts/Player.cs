@@ -11,12 +11,18 @@ public class Player : MonoBehaviour
     public LayerMask AimMask;
     public GameObject BulletPrefab;
     public Transform Muzzle;
+    public AudioClip[] FiringSounds;
+    public AudioClip[] FootstepSounds;
 
     private Vector3 currentInput;
+    [SerializeField] private AudioSource firingAudioSource;
+    [SerializeField] private AudioSource footstepAudioSource;
+    private float nextAllowedTimeToPlay;
 
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        nextAllowedTimeToPlay = 0;
     }
 
     private void Update()
@@ -28,6 +34,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Impulse);
+
+        if(currentInput.x != 0 || currentInput.z != 0) {
+            if(Time.time > nextAllowedTimeToPlay) {
+                footstepAudioSource.PlayOneShot(FootstepSounds[(int) (Random.value * FootstepSounds.Length)]);
+                nextAllowedTimeToPlay = Time.time + 0.3f;
+            }
+        }
         UpdateRotation();
     }
 
@@ -38,6 +51,8 @@ public class Player : MonoBehaviour
                             (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f), 
                             0f, 
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
+        
+        
     }
 
     private void UpdateRotation()
@@ -57,6 +72,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Instantiate(BulletPrefab, Muzzle.transform.position, Muzzle.transform.rotation);
+            firingAudioSource.PlayOneShot(FiringSounds[(int) (Random.value * FiringSounds.Length)]);
         }
     }
 }
