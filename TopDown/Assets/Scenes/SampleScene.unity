@@ -544,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 183466598}
   - component: {fileID: 183466597}
+  - component: {fileID: 183466599}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -570,6 +571,7 @@ MonoBehaviour:
   ObstacleLayer:
     serializedVersion: 2
     m_Bits: 2048
+  targets: []
 --- !u!4 &183466598
 Transform:
   m_ObjectHideFlags: 0
@@ -584,6 +586,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &183466599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183466596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a45a01e30d0467f955166745a7e508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &197825202
 GameObject:
   m_ObjectHideFlags: 0
