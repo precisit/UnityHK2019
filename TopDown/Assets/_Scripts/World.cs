@@ -10,11 +10,12 @@ public class World : MonoBehaviour
     private float currentTime;
     public Target TargetPrefab;
     public LayerMask ObstacleLayer;
+    public List<Target> targets;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        targets = new List<Target>();
     }
 
     // Update is called once per frame
@@ -41,7 +42,7 @@ public class World : MonoBehaviour
         } while(Physics.OverlapSphere(spawnPosition, 2f, ObstacleLayer).Length > 0
             && spawnAttempts < 10);
         if(spawnAttempts < 10) {
-            Instantiate(TargetPrefab, spawnPosition, Quaternion.identity);
+            targets.Add(Instantiate(TargetPrefab, spawnPosition, Quaternion.identity));
         } else {
             Debug.Log("Failed to find suitable spawn location after 10 retries. Aborting spawn.");
         }
