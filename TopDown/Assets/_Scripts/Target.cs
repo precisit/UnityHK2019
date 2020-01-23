@@ -7,9 +7,12 @@ public class Target : Damageable
 {
 
     public GameObject HitEffect;
-
+    public AudioClip[] PassiveSounds;
+    
     private GameObject Chase;
     private NavMeshAgent agent;
+    private AudioSource audioSource;
+    private float audioTime;
 
     private bool isDead;
 
@@ -28,6 +31,8 @@ public class Target : Damageable
         Player p = FindObjectOfType<Player>();
         Chase = p.gameObject;
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
+        audioTime = 0;
     }
 
     void Update()
@@ -35,6 +40,15 @@ public class Target : Damageable
         if(!isDead) {
             agent.SetDestination(Chase.transform.position);
             animator.SetFloat("MoveSpeed", 1.0f);
+            audioTime += Time.deltaTime;
+            
+            if(audioTime > 10f) {
+                audioTime = 0;
+                if(Random.value < 0.5f) {
+                    audioSource.pitch = Random.Range(0.8f, 1.2f);
+                    audioSource.PlayOneShot(PassiveSounds[(int) Random.value*PassiveSounds.Length]);
+                }
+            }
         }
     }
 
