@@ -11,6 +11,18 @@ public class Target : Damageable
     private GameObject Chase;
     private NavMeshAgent agent;
 
+    private bool isDead;
+
+    private CapsuleCollider capsuleCollider;
+
+    public Animator animator;
+
+ void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+    }
+
     void Start()
     {
         Player p = FindObjectOfType<Player>();
@@ -20,11 +32,18 @@ public class Target : Damageable
 
     void Update()
     {
-        agent.SetDestination(Chase.transform.position);
+        if(!isDead) {
+            agent.SetDestination(Chase.transform.position);
+            animator.SetFloat("MoveSpeed", 1.0f);
+        }
     }
 
     public override void OnDamage() {
-        Destroy(gameObject);
+       // Destroy(gameObject);
+       animator.SetTrigger("Dead");
+       isDead=true;
+       agent.speed = 0.0f;
+       capsuleCollider.enabled =false;
         //Debug.Log("Object destroyed");
     }
 
