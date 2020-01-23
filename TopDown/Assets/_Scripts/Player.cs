@@ -11,12 +11,15 @@ public class Player : MonoBehaviour
     public LayerMask AimMask;
     public GameObject BulletPrefab;
     public Transform Muzzle;
+    public AudioClip[] FiringSounds;
 
     private Vector3 currentInput;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Instantiate(BulletPrefab, Muzzle.transform.position, Muzzle.transform.rotation);
+            audioSource.PlayOneShot(FiringSounds[(int) (Random.value * FiringSounds.Length)]);
         }
     }
 }
