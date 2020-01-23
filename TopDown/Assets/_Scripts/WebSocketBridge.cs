@@ -65,6 +65,7 @@ public class WebSocketBridge : MonoBehaviour
             {
                 var message = Encoding.UTF8.GetString(arraySegment.Array, 0, result.Count);
                 if (OnReceived != null) OnReceived(message);
+                Debug.Log("<color=red>WebSocket message: </color> " + message); // Todo: Remove debug & use event
             }
         }
     }

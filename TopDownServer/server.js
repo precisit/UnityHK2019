@@ -1,25 +1,27 @@
-var express = require('express');
-var app = express();
-var expressWs = require('express-ws')(app);
+const WebSocket = require('ws');
+const uuidv4 = require('uuid/v4');
 
-const port = 1337;
-
-app.use(function (req, res, next) {
-//  console.log('middleware');
-//  req.testing = 'testing';
-  return next();
+const wss = new WebSocket.Server({
+    port: 1337
+}, () => {
+    console.log('TopDown super server listening on port', wss.options.port);
 });
 
-app.get('/', function(req, res, next){
-//  console.log('get route', req.testing);
-  res.end();
-});
+var clientMap = {}; // Map of clients, for cross client communication
 
-app.ws('/', function(ws, req) {
-  ws.on('message', function(msg) {
-    console.log('Message from unity: ', msg);
-  });
-  console.log('Client connected!');
-});
+wss.on('connection', ws => {
+    ws.clientId = uuidv4();
+    clientMap[ws.clientId] = ws; 
 
-app.listen(port, () => console.log(`TopDownServer listening on port ${port}!`));
+    console.log(`Client connected: ${ws.clientId}`);
+    
+    ws.send(ws.clientId); //Inform client of clientId
+
+    ws.on('message', message => {
+        console.log('From Unity: %s', message);
+
+/*        wss.clients.forEach(function each(ws) { // Primite broadcast / echo 
+            ws.send(message);
+        });*/
+    });
+});
