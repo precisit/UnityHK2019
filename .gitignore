@@ -37,3 +37,6 @@ sysinfo.txt
 
 # MacOs
 **/.DS_Store
+
+# NodeJs
+**/node_modules/
