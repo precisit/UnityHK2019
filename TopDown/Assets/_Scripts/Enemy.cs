@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Target : Damageable
+public class Enemy : Damageable
 {
 
     public GameObject HitEffect;
     public AudioClip[] PassiveSounds;
     public ParticleSystem AliveParticles;
-    
+
     private GameObject Chase;
     private NavMeshAgent agent;
     private AudioSource audioSource;
@@ -21,13 +21,13 @@ public class Target : Damageable
 
     public Animator animator;
 
- void Awake()
+    protected void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    void Start()
+    protected void Start()
     {
         Player p = FindObjectOfType<Player>();
         Chase = p.gameObject;
@@ -36,7 +36,7 @@ public class Target : Damageable
         audioTime = 0;
     }
 
-    void Update()
+    protected void Update()
     {
         if(!isDead) {
             agent.SetDestination(Chase.transform.position);

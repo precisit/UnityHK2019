@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     public AudioClip[] FootstepSounds;
 
     private Vector3 currentInput;
-    [SerializeField] private AudioSource firingAudioSource;
-    [SerializeField] private AudioSource footstepAudioSource;
+    public AudioSource firingAudioSource;
+    public AudioSource footstepAudioSource;
     private float nextAllowedTimeToPlay;
 
     private void Awake()

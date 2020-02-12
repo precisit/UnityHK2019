@@ -8,14 +8,14 @@ public class World : MonoBehaviour
     public Vector3 SpawnArea;
     public float SpawnTime;
     private float currentTime;
-    public Target TargetPrefab;
+    public Enemy EnemyPrefab;
     public LayerMask ObstacleLayer;
-    public List<Target> targets;
+    public List<Enemy> enemies {get; private set;}
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        targets = new List<Target>();
+        enemies = new List<Enemy>();
     }
 
     // Update is called once per frame
@@ -23,12 +23,12 @@ public class World : MonoBehaviour
     {
         currentTime += Time.deltaTime;
         if (currentTime > SpawnTime) {
-            doSpawnTarget();
+            SpawnEnemy();
             currentTime = 0f;
         }
     }
 
-    private void doSpawnTarget() {
+    private void SpawnEnemy() {
         Vector3 spawnPosition = transform.position + new Vector3(SpawnArea.x * Random.Range(-0.5f, 0.5f),
         1f,
         SpawnArea.z * Random.Range(-0.5f, 0.5f));
@@ -42,7 +42,7 @@ public class World : MonoBehaviour
         } while(Physics.OverlapSphere(spawnPosition, 2f, ObstacleLayer).Length > 0
             && spawnAttempts < 10);
         if(spawnAttempts < 10) {
-            targets.Add(Instantiate(TargetPrefab, spawnPosition, Quaternion.identity));
+            enemies.Add(Instantiate(EnemyPrefab, spawnPosition, Quaternion.identity));
         } else {
             Debug.Log("Failed to find suitable spawn location after 10 retries. Aborting spawn.");
         }

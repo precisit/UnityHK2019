@@ -31,22 +31,22 @@ public class WebSocketBridge : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        Debug.Log("<color=cyan>WebSocket connecting to "+ webSocketURL + "</color>");
+       // Debug.Log("<color=cyan>WebSocket connecting to "+ webSocketURL + "</color>");
 
         try
         {
             await webSocket.ConnectAsync(new System.Uri(webSocketURL), cancellationToken);
 
-            Debug.Log("<color=cyan>WebSocket receiving.</color>");
+           // Debug.Log("<color=cyan>WebSocket receiving.</color>");
             await Receive();
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("<color=cyan>WebSocket shutting down.</color>");
+            //Debug.Log("<color=cyan>WebSocket shutting down.</color>");
         }
         catch (WebSocketException)
         {
-            Debug.Log("<color=cyan>WebSocket connection lost.</color>");
+            //Debug.Log("<color=cyan>WebSocket connection lost.</color>");
         }
         catch (Exception ex)
         {
@@ -65,7 +65,7 @@ public class WebSocketBridge : MonoBehaviour
             {
                 var message = Encoding.UTF8.GetString(arraySegment.Array, 0, result.Count);
                 if (OnReceived != null) OnReceived(message);
-                Debug.Log("<color=red>WebSocket message: </color> " + message); // Todo: Remove debug & use event
+                //Debug.Log("<color=red>WebSocket message: </color> " + message); // Todo: Remove debug & use event
             }
         }
     }
@@ -84,7 +84,7 @@ public class WebSocketBridge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Send(world.targets[0].transform.position.ToString());
+        Send(world.enemies[0].transform.position.ToString());
 /*        if(world.targets[0])
         {
             Debug.Log(world.targets[0].transform.position);

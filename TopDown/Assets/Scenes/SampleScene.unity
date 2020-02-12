@@ -566,12 +566,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnArea: {x: 95, y: 0, z: 95}
   SpawnTime: 2
-  TargetPrefab: {fileID: 3093822620230145442, guid: ba34d9351af6c4a69b0583f3e6f53c22,
+  EnemyPrefab: {fileID: 3093822620230145442, guid: ba34d9351af6c4a69b0583f3e6f53c22,
     type: 3}
   ObstacleLayer:
     serializedVersion: 2
     m_Bits: 2048
-  targets: []
 --- !u!4 &183466598
 Transform:
   m_ObjectHideFlags: 0
