@@ -8,6 +8,7 @@ public class Target : Damageable
 
     public GameObject HitEffect;
     public AudioClip[] PassiveSounds;
+    public ParticleSystem AliveParticles;
     
     private GameObject Chase;
     private NavMeshAgent agent;
@@ -58,6 +59,7 @@ public class Target : Damageable
        isDead=true;
        agent.speed = 0.0f;
        capsuleCollider.enabled =false;
+       AliveParticles.Stop();
         //Debug.Log("Object destroyed");
     }
 

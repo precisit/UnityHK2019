@@ -36,8 +36,8 @@ public class Player : MonoBehaviour
         myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Impulse);
 
         if(currentInput.x != 0 || currentInput.z != 0) {
-            if(Time.time > nextAllowedTimeToPlay) {
-                footstepAudioSource.PlayOneShot(FootstepSounds[(int) (Random.value * FootstepSounds.Length)]);
+            if(Time.time > nextAllowedTimeToPlay && FootstepSounds.Length > 0) {
+                footstepAudioSource?.PlayOneShot(FootstepSounds[(int) (Random.value * FootstepSounds.Length)]);
                 nextAllowedTimeToPlay = Time.time + 0.3f;
             }
         }
