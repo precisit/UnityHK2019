@@ -10,6 +10,11 @@ public class Enemy : Damageable
     public AudioClip[] PassiveSounds;
     public ParticleSystem AliveParticles;
 
+    [Header("PlayerDetection")]
+    public GameObject Sensor;
+    public LayerMask DetectionLayer;
+    
+
     private GameObject Chase;
     private NavMeshAgent agent;
     private AudioSource audioSource;
@@ -65,5 +70,13 @@ public class Enemy : Damageable
 
     public override GameObject GetHitEffect() {
         return Instantiate(HitEffect);
+    }
+
+    protected virtual void OnTriggerEnter(Collider collider) {
+        Debug.Log("Trigger enter");
+        if (DetectionLayer == (DetectionLayer | (1 << collider.gameObject.layer)))
+        {
+            Debug.Log("Player entered Zombie-attack-range! Watch out.");
+        }
     }
 }
