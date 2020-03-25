@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Target : Damageable
+public class Enemy : Damageable
 {
 
     public GameObject HitEffect;
     public AudioClip[] PassiveSounds;
+    public ParticleSystem AliveParticles;
+
+    [Header("PlayerDetection")]
+    public GameObject Sensor;
+    public LayerMask DetectionLayer;
     
+
     private GameObject Chase;
     private NavMeshAgent agent;
     private AudioSource audioSource;
@@ -20,13 +26,13 @@ public class Target : Damageable
 
     public Animator animator;
 
- void Awake()
+    protected void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    void Start()
+    protected void Start()
     {
         Player p = FindObjectOfType<Player>();
         Chase = p.gameObject;
@@ -35,7 +41,7 @@ public class Target : Damageable
         audioTime = 0;
     }
 
-    void Update()
+    protected void Update()
     {
         if(!isDead) {
             agent.SetDestination(Chase.transform.position);
@@ -58,10 +64,19 @@ public class Target : Damageable
        isDead=true;
        agent.speed = 0.0f;
        capsuleCollider.enabled =false;
+       AliveParticles.Stop();
         //Debug.Log("Object destroyed");
     }
 
     public override GameObject GetHitEffect() {
         return Instantiate(HitEffect);
+    }
+
+    protected virtual void OnTriggerEnter(Collider collider) {
+        Debug.Log("Trigger enter");
+        if (DetectionLayer == (DetectionLayer | (1 << collider.gameObject.layer)))
+        {
+            Debug.Log("Player entered Zombie-attack-range! Watch out.");
+        }
     }
 }
