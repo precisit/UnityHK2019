@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : Damageable
 {
-
     public GameObject HitEffect;
     public AudioClip[] PassiveSounds;
     public ParticleSystem AliveParticles;
@@ -13,10 +12,12 @@ public class Enemy : Damageable
     [Header("PlayerDetection")]
     public GameObject Sensor;
     public LayerMask DetectionLayer;
-    
+
+    [Header("Enemy Stats")]
+    public float moveSpeed;
 
     private GameObject Chase;
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     private AudioSource audioSource;
     private float audioTime;
 
@@ -26,13 +27,14 @@ public class Enemy : Damageable
 
     public Animator animator;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = moveSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         Player p = FindObjectOfType<Player>();
         Chase = p.gameObject;
@@ -47,7 +49,7 @@ public class Enemy : Damageable
             agent.SetDestination(Chase.transform.position);
             animator.SetFloat("MoveSpeed", 1.0f);
             audioTime += Time.deltaTime;
-            
+
             if(audioTime > 10f) {
                 audioTime = 0;
                 if(Random.value < 0.5f) {
@@ -58,25 +60,15 @@ public class Enemy : Damageable
         }
     }
 
-    public override void OnDamage() {
-       // Destroy(gameObject);
-       animator.SetTrigger("Dead");
-       isDead=true;
+    public override void OnDamage()
+    {
+       isDead = true;
        agent.speed = 0.0f;
-       capsuleCollider.enabled =false;
+       capsuleCollider.enabled = false;
        AliveParticles.Stop();
-        //Debug.Log("Object destroyed");
     }
 
     public override GameObject GetHitEffect() {
         return Instantiate(HitEffect);
-    }
-
-    protected virtual void OnTriggerEnter(Collider collider) {
-        Debug.Log("Trigger enter");
-        if (DetectionLayer == (DetectionLayer | (1 << collider.gameObject.layer)))
-        {
-            Debug.Log("Player entered Zombie-attack-range! Watch out.");
-        }
     }
 }
