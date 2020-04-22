@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 77603133}
   - component: {fileID: 77603130}
   - component: {fileID: 77603129}
+  - component: {fileID: 77603135}
   - component: {fileID: 77603134}
   - component: {fileID: 77603131}
   - component: {fileID: 77603132}
@@ -282,12 +283,14 @@ MonoBehaviour:
   MoveSpeed: 5
   TurnSpeed: 5
   MainCamera: {fileID: 963194227}
+  BulletPrefab: {fileID: 3997565883103477452, guid: 24265109d044b4606af146df0eddd249,
+    type: 3}
+  Muzzle: {fileID: 2102874600}
+  damageable: {fileID: 77603135}
   AimMask:
     serializedVersion: 2
     m_Bits: 256
-  BulletPrefab: {fileID: 3524755946288354118, guid: 24265109d044b4606af146df0eddd249,
-    type: 3}
-  Muzzle: {fileID: 2102874600}
+  Damage: 10
   FiringSounds:
   - {fileID: 8300000, guid: 2203773368e4340d98c114f55c2dd7fd, type: 3}
   - {fileID: 8300000, guid: 4d6281aa604094f04839cffa502096c0, type: 3}
@@ -564,6 +567,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &77603135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77603128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801f4d3cc15a846759b8e2134276e72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitEffect: {fileID: 9093237153720340463, guid: b3800c77ab74746c4a24034dcd5d56d6,
+    type: 3}
+  HpMax: 10
 --- !u!1 &183466596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,7 +1830,7 @@ MonoBehaviour:
   Smoothing: 0.5
   FollowRigidbody: {fileID: 77603134}
   VelocityOffset: 1
-  ZoomPerVelocity: 0.5
+  ZoomPerVelocity: 0.2
 --- !u!1 &981379576
 GameObject:
   m_ObjectHideFlags: 0

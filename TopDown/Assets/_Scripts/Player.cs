@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     public float MoveSpeed;
     public float TurnSpeed = 0.1f;
     private Rigidbody myRigidbody;
+    [Header("References")]
     public Camera MainCamera;
-    public LayerMask AimMask;
-    public GameObject BulletPrefab;
+    public Bullet BulletPrefab;
     public Transform Muzzle;
+    public Damageable damageable;
+
+    [Header("Damage")]
+    public LayerMask AimMask;
+    public float Damage;
+
+    [Header("Audio")]
     public AudioClip[] FiringSounds;
     public AudioClip[] FootstepSounds;
 
@@ -18,6 +26,16 @@ public class Player : MonoBehaviour
     public AudioSource firingAudioSource;
     public AudioSource footstepAudioSource;
     private float nextAllowedTimeToPlay;
+
+    protected virtual void OnEnable()
+    {
+        damageable.OnDeath += OnDeath;
+    }
+
+    protected virtual void OnDisable()
+    {
+        damageable.OnDeath -= OnDeath;
+    }
 
     private void Awake()
     {
@@ -47,12 +65,12 @@ public class Player : MonoBehaviour
     private void UpdateMovement()
     {
         // Movement
-        currentInput = new Vector3( 
-                            (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f), 
-                            0f, 
+        currentInput = new Vector3(
+                            (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f),
+                            0f,
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
-        
-        
+
+
     }
 
     private void UpdateRotation()
@@ -71,8 +89,14 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Instantiate(BulletPrefab, Muzzle.transform.position, Muzzle.transform.rotation);
+            Bullet newBullet = Instantiate(BulletPrefab, Muzzle.transform.position, Muzzle.transform.rotation);
+            newBullet.SetDamage(Damage);
             firingAudioSource.PlayOneShot(FiringSounds[(int) (Random.value * FiringSounds.Length)]);
         }
+    }
+
+    private void OnDeath()
+    {
+        Debug.LogWarning("YOU ARE DEAD!");
     }
 }

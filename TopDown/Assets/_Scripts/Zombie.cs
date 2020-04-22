@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class Zombie : Enemy
 {
+    public float DamageDelay;
+    public Transform DamageTransform;
+    public float DamageRadius;
+    public LayerMask DamageLayer;
+
     private enum State
     {
         Walk,
@@ -32,7 +37,7 @@ public class Zombie : Enemy
             switch(newState)
             {
                 case State.Walk:
-                    agent.speed = moveSpeed;
+                    agent.speed = MoveSpeed;
                     break;
                 case State.Attack:
                     animator.SetTrigger("Attack");
@@ -48,9 +53,9 @@ public class Zombie : Enemy
         SetState(newState);
     }
 
-    public override void OnDamage()
+    protected override void OnDeath()
     {
-        base.OnDamage();
+        base.OnDeath();
         animator.SetTrigger("Dead");
         SetState(State.Dead);
     }
@@ -62,8 +67,31 @@ public class Zombie : Enemy
             if (currentState == State.Walk)
             {
                 SetState(State.Attack);
+                StartCoroutine(AttackSequence());
                 SetState(State.Walk, 1f);
             }
         }
+    }
+
+    private void DealDamage()
+    {
+        Collider[] colliders = Physics.OverlapSphere(DamageTransform.position, DamageRadius, DamageLayer);
+        foreach(Collider col in colliders)
+        {
+            col.gameObject.GetComponent<Damageable>()?.OnDamage(Damage);
+
+        }
+    }
+
+    private IEnumerator AttackSequence()
+    {
+        yield return new WaitForSeconds(DamageDelay);
+        DealDamage();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(DamageTransform.position, DamageRadius);
     }
 }

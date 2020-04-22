@@ -4832,7 +4832,7 @@ GameObject:
   - component: {fileID: 2396047341794362988}
   - component: {fileID: 8781529760888410838}
   m_Layer: 0
-  m_Name: TargetHit
+  m_Name: ZombieHitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4845,8 +4845,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9093237153720340463}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.4060439, z: 0, w: -0.91385365}
+  m_LocalPosition: {x: 21.421432, y: 1.293, z: 9.240276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4095910385857266201}

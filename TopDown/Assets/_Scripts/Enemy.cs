@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : Damageable
+public class Enemy : MonoBehaviour
 {
-    public GameObject HitEffect;
+    public Damageable damageable;
     public AudioClip[] PassiveSounds;
     public ParticleSystem AliveParticles;
 
@@ -14,7 +14,8 @@ public class Enemy : Damageable
     public LayerMask DetectionLayer;
 
     [Header("Enemy Stats")]
-    public float moveSpeed;
+    public float MoveSpeed;
+    public float Damage;
 
     private GameObject Chase;
     protected NavMeshAgent agent;
@@ -27,10 +28,20 @@ public class Enemy : Damageable
 
     public Animator animator;
 
+    protected virtual void OnEnable()
+    {
+        damageable.OnDeath += OnDeath;
+    }
+
+    protected virtual void OnDisable()
+    {
+        damageable.OnDeath -= OnDeath;
+    }
+
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = moveSpeed;
+        agent.speed = MoveSpeed;
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
@@ -60,15 +71,11 @@ public class Enemy : Damageable
         }
     }
 
-    public override void OnDamage()
+    protected virtual void OnDeath()
     {
        isDead = true;
        agent.speed = 0.0f;
        capsuleCollider.enabled = false;
        AliveParticles.Stop();
-    }
-
-    public override GameObject GetHitEffect() {
-        return Instantiate(HitEffect);
     }
 }

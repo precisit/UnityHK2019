@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class Bullet : MonoBehaviour
     public GameObject HitEffect;
     RaycastHit hit;
     public LayerMask hitLayers;
+    private float damage;
 
     void Start()
     {
@@ -39,9 +41,9 @@ public class Bullet : MonoBehaviour
     {
         Damageable damageable = hit.collider.gameObject.GetComponent<Damageable>();
         GameObject hitEffect = null;
-        
+
         if(damageable) {
-            damageable.OnDamage();
+            damageable.OnDamage(damage);
             hitEffect = damageable.GetHitEffect();
             hitEffect.transform.position = hit.point;
             hitEffect.transform.rotation = transform.rotation;
@@ -54,6 +56,11 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        
+
+    }
+
+    internal void SetDamage(float damage)
+    {
+        this.damage = damage;
     }
 }
