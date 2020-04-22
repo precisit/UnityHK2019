@@ -77,7 +77,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   MoveSpeed: 6
-  Damage: 5000
+  Damage: 1
   animator: {fileID: 9223300981085790914}
   DamageDelay: 0.3
   DamageTransform: {fileID: 4305572497005179694}

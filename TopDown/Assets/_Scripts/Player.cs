@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -30,11 +31,13 @@ public class Player : MonoBehaviour
     protected virtual void OnEnable()
     {
         damageable.OnDeath += OnDeath;
+        damageable.OnDamageTaken += OnDamageTaken;
     }
 
     protected virtual void OnDisable()
     {
         damageable.OnDeath -= OnDeath;
+        damageable.OnDamageTaken -= OnDamageTaken;
     }
 
     private void Awake()
@@ -95,8 +98,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnDamageTaken()
+    {
+        Debug.Log("Damage Taken: " + damageable.PrintHp());
+    }
+
     private void OnDeath()
     {
         Debug.LogWarning("YOU ARE DEAD!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
