@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public Bullet BulletPrefab;
     public Transform Muzzle;
     public Damageable damageable;
+    public Animator animator;
 
     [Header("Damage")]
     public LayerMask AimMask;
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour
     public AudioSource firingAudioSource;
     public AudioSource footstepAudioSource;
     private float nextAllowedTimeToPlay;
+
+    private Vector3 aimPosition;
 
     protected virtual void OnEnable()
     {
@@ -73,7 +76,7 @@ public class Player : MonoBehaviour
                             0f,
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
 
-
+        animator.SetFloat("MoveSpeed", myRigidbody.velocity.magnitude);
     }
 
     private void UpdateRotation()
@@ -83,6 +86,7 @@ public class Player : MonoBehaviour
         Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, float.MaxValue, AimMask))
         {
+            aimPosition = hit.point;
             float angle = Vector3.SignedAngle(transform.forward, hit.point.Flatten() - transform.position.Flatten(), Vector3.up);
             myRigidbody.AddTorque(transform.up * angle * TurnSpeed, ForceMode.Force);
         }
@@ -107,5 +111,11 @@ public class Player : MonoBehaviour
     {
         Debug.LogWarning("YOU ARE DEAD!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(aimPosition, 2f);
     }
 }
