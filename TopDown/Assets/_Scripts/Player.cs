@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
     public float TurnSpeed = 0.1f;
     private Rigidbody myRigidbody;
     public float jumpForce;
+    private bool isGrounded = false;
     [Header("References")]
     public Camera MainCamera;
     public Bullet BulletPrefab;
     public Transform Muzzle;
     public Damageable damageable;
     public Animator animator;
+    public Transform feet;
 
     [Header("Damage")]
     public LayerMask AimMask;
@@ -74,6 +76,7 @@ public class Player : MonoBehaviour
             }
         }
         UpdateRotation();
+        UpdateGrounded();
     }
 
     private void UpdateMovement()
@@ -84,9 +87,10 @@ public class Player : MonoBehaviour
                             0f,
                             Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f)).normalized;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
         animator.SetFloat("MoveSpeed", myRigidbody.velocity.magnitude);
     }
@@ -112,6 +116,23 @@ public class Player : MonoBehaviour
             newBullet.SetDamage(Damage);
             firingAudioSource.PlayOneShot(FiringSounds[(int) (Random.value * FiringSounds.Length)]);
         }
+    }
+
+    private void UpdateGrounded()
+    {
+        // if ()
+        // {
+        //     isGrounded = false;
+        // }
+        // else
+        // {
+        if (myRigidbody.velocity.y > 0){
+            isGrounded = false;
+        }
+        else{
+            isGrounded = Physics.Raycast(feet.position, feet.forward, 1f, AimMask);
+        }
+        //}
     }
 
     private void OnDamageTaken()
