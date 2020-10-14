@@ -7,8 +7,10 @@ public class Player : MonoBehaviour
 {
     [Header("Movement")]
     public float MoveSpeed;
+    public float MaxSpeed;
     public float TurnSpeed = 0.1f;
     private Rigidbody myRigidbody;
+    public float jumpForce;
     [Header("References")]
     public Camera MainCamera;
     public Bullet BulletPrefab;
@@ -57,7 +59,13 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Impulse);
+        myRigidbody.AddForce(MoveSpeed * currentInput, ForceMode.Acceleration);
+        Vector2 planeVelocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.z);
+        if (planeVelocity.magnitude > MaxSpeed)
+        {
+            planeVelocity = planeVelocity.normalized * MaxSpeed;
+            myRigidbody.velocity = new Vector3(planeVelocity.x, myRigidbody.velocity.y, planeVelocity.y);
+        }
 
         if(currentInput.x != 0 || currentInput.z != 0) {
             if(Time.time > nextAllowedTimeToPlay && FootstepSounds.Length > 0) {
@@ -74,8 +82,12 @@ public class Player : MonoBehaviour
         currentInput = new Vector3(
                             (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1f : 0f),
                             0f,
-                            Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f));
+                            Input.GetKey(KeyCode.W) ? 1f : 0f + (Input.GetKey(KeyCode.S) ? -1f : 0f)).normalized;
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
         animator.SetFloat("MoveSpeed", myRigidbody.velocity.magnitude);
     }
 
@@ -113,9 +125,9 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(aimPosition, 2f);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawSphere(aimPosition, 2f);
+    // }
 }

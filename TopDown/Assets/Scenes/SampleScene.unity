@@ -280,8 +280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a2820eaaccc4ef5a70ba4bf79c42b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  TurnSpeed: 5
+  MoveSpeed: 300
+  MaxSpeed: 1
+  TurnSpeed: 200
+  jumpForce: 500
   MainCamera: {fileID: 963194227}
   BulletPrefab: {fileID: 3997565883103477452, guid: 24265109d044b4606af146df0eddd249,
     type: 3}
@@ -560,8 +562,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77603128}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 20
+  m_Mass: 80
+  m_Drag: 1
   m_AngularDrag: 40
   m_UseGravity: 1
   m_IsKinematic: 0
