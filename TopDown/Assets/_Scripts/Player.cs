@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
 
     private Vector3 aimPosition;
 
+    public delegate void PlayerDeathDelegate();
+    public static event PlayerDeathDelegate OnPlayerDeath;
+
     protected virtual void OnEnable()
     {
         damageable.OnDeath += OnDeath;
@@ -143,7 +146,7 @@ public class Player : MonoBehaviour
     private void OnDeath()
     {
         Debug.LogWarning("YOU ARE DEAD!");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        OnPlayerDeath?.Invoke();
     }
 
     // private void OnDrawGizmos()
